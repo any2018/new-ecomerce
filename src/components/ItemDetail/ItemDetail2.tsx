@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from 'react';
+import { FC, useState, ChangeEvent, useEffect } from 'react';
 import {  useContext } from 'react'
 import { CartCntext2 } from '../../context/CartCntext2'
 import { ItemCounter } from '../ItemCounter/ItemCounter'
@@ -38,13 +38,18 @@ import AddShoppingCartTwoToneIcon from '@mui/icons-material/AddShoppingCartTwoTo
 import { useTranslation } from 'react-i18next';
 import ChevronRightTwoToneIcon from '@mui/icons-material/ChevronRightTwoTone';
 import ChevronLeftTwoToneIcon from '@mui/icons-material/ChevronLeftTwoTone';
+import { Navigation } from 'swiper/modules';
+import { Thumbs , FreeMode } from 'swiper/modules';
+import { Swiper as SwiperType } from 'swiper';
+import { SwiperSlide,Swiper, useSwiper } from 'swiper/react';
 
-import SwiperCore,{ Navigation, Thumbs } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode } from 'swiper';
+// Use SwiperCore modules
 
 
-import 'swiper/swiper.scss'; // Import Swiper styles
+
+
+
+import 'swiper/css';// Import Swiper styles
 import 'swiper/css/navigation'; // Import Swiper Navigation styles
 import 'swiper/css/thumbs'; // 
 import 'swiper/css/free-mode';
@@ -54,6 +59,7 @@ import { useSnackbar, enqueueSnackbar  } from 'notistack';
 import { Product } from './prouct-interface'
 import {  Dispatch, SetStateAction } from 'react';
 import numeral from 'numeral';
+
 
 interface ProductBodyProps {
   product: Product;
@@ -92,7 +98,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
  */
 
-SwiperCore.use([Navigation, Thumbs]);
 const SwipeIndicator = styled(IconButton)(
   ({ theme }) => `
     @media (max-width: ${theme.breakpoints.values.sm}px) {
@@ -192,8 +197,8 @@ export const ItemDetail2 : FC<ProductBodyProps>= ({ product }) => {
   const { t }: { t: any } = useTranslation();
   const { cart, addItem, isInCart, handleQuantity } = useContext(CartCntext2);
   const [quantity, setQuantity] = useState(0)
-  const [thumbsSwiper, setThumbsSwiper] = useState<typeof Swiper | null>(null);
-
+  /* const [thumbsSwiper, setThumbsSwiper] = useState<typeof Swiper | null>(null); */
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
 
   /* const [thumbsSwiper, setThumbsSwiper]: [Swiper: any | null, Dispatch<SetStateAction<null>>] = useState(null); */
@@ -284,6 +289,9 @@ export const ItemDetail2 : FC<ProductBodyProps>= ({ product }) => {
     });
   };
 
+
+
+
  
   return (
 
@@ -334,7 +342,7 @@ export const ItemDetail2 : FC<ProductBodyProps>= ({ product }) => {
                       loop
                       autoHeight
                       spaceBetween={10}
-                      thumbs={{ swiper: thumbsSwiper }}
+                      thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null}}
                       modules={[FreeMode, Navigation, Thumbs]}
                       navigation={{
                         nextEl: '.MuiSwipe-right',
@@ -361,13 +369,15 @@ export const ItemDetail2 : FC<ProductBodyProps>= ({ product }) => {
                   </Box>
 
                   <Swiper
-                onSwiper={(swiper) => setThumbsSwiper(swiper)}
-                    loop
+                   onSwiper={setThumbsSwiper}         
+                   loop
+                   modules={[FreeMode, Navigation, Thumbs]}
+                   watchSlidesProgress
                     spaceBetween={10}
                     slidesPerView={4}
                     freeMode
-                    watchSlidesProgress
-                    modules={[FreeMode, Navigation, Thumbs]}
+                  
+                   
                     navigation={{
                       nextEl: '.MuiSwipe-right',
                       prevEl: '.MuiSwipe-left'

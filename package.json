@@ -2,7 +2,7 @@
   "name": "new-ecomerce",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://productosnutricionales.com.ar",
+  "homepage": "http://any2018.github.io/new-ecomerce",
   "dependencies": {
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",
@@ -18,6 +18,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
     "@types/mercadopago": "^1.5.8",
+    "@types/swiper": "^6.0.0",
     "accounting": "^0.4.1",
     "axios": "^1.4.0",
     "bootstrap": "^5.0.2",
@@ -40,13 +41,13 @@
     "react-whatsapp": "^0.2.1",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.4.4",
-    "swiper": "^8.2.2",
+    "swiper": "^11.0.5",
     "typescript": "^4.9.5",
     "web-vitals": "^1.1.1",
     "yup": "^0.32.11"
   },
   "scripts": {
-    "predeploy": "npm run build && tsc && echo 'productosnutricionales.com.ar' > ./build/CNAME",
+    "predeploy": "npm run build && tsc",
     "deploy": "gh-pages -d build",
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",
